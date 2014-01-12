@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to python-xbee’s documentation! &mdash; python-xbee 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-xbee 2.1.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">python-xbee 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-xbee">
+<span id="welcome-to-python-xbee-s-documentation"></span><h1>Welcome to python-xbee&#8217;s documentation!<a class="headerlink" href="#module-xbee" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of XBee is to allow one easy access to
+the advanced features of an XBee device from a
+Python application. It provides a semi-complete
+implementation of the XBee binary API protocol
+and allows a developer to send and receive the
+information they desire without dealing with the
+raw communication details.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This library is compatible with both XBee 802.15.4 (Series 1)
+and XBee ZigBee (Series 2) modules, normal and PRO. The following
+examples are applicable to XBee 802.15.4 modules; to follow
+these examples with a XBee ZigBee device, change the line:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xbee</span> <span class="o">=</span> <span class="n">XBee</span><span class="p">(</span><span class="n">serial_port</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">xbee</span> <span class="o">=</span> <span class="n">ZigBee</span><span class="p">(</span><span class="n">serial_port</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order to use an XBee device with this library, API mode
+must be enabled. For instructions about how to do this, see
+the documentation for your XBee device.</p>
+</div>
+<div class="section" id="synchonous-mode">
+<h3>Synchonous Mode<a class="headerlink" href="#synchonous-mode" title="Permalink to this headline">¶</a></h3>
+<p>The following code demonstrates a minimal use-case for the
+xbee package:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">from</span> <span class="nn">xbee</span> <span class="kn">import</span> <span class="n">XBee</span>
+
+<span class="n">serial_port</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="s">&#39;/dev/ttyUSB0&#39;</span><span class="p">,</span> <span class="mi">9600</span><span class="p">)</span>
+<span class="n">xbee</span> <span class="o">=</span> <span class="n">XBee</span><span class="p">(</span><span class="n">serial_port</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">xbee</span><span class="o">.</span><span class="n">wait_read_frame</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">serial_port</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example will perpetually read from the serial port and
+print out any data frames which arrive from a connected XBee
+device. Be aware that wait_read_frame() will block until
+a valid frame is received from the associated XBee device.</p>
+</div>
+<div class="section" id="asynchronous-mode">
+<h3>Asynchronous Mode<a class="headerlink" href="#asynchronous-mode" title="Permalink to this headline">¶</a></h3>
+<p>The xbee package is used only slightly differently when
+asynchonous notification of received data is needed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">serial</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">xbee</span> <span class="kn">import</span> <span class="n">XBee</span>
+
+<span class="n">serial_port</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="s">&#39;/dev/ttyUSB0&#39;</span><span class="p">,</span> <span class="mi">9600</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method is called whenever data is received</span>
+<span class="sd">    from the associated XBee device. Its first and</span>
+<span class="sd">    only argument is the data contained within the</span>
+<span class="sd">    frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="n">data</span>
+
+<span class="n">xbee</span> <span class="o">=</span> <span class="n">XBee</span><span class="p">(</span><span class="n">serial_port</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">print_data</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">break</span>
+
+<span class="n">xbee</span><span class="o">.</span><span class="n">halt</span><span class="p">()</span>
+<span class="n">serial_port</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When asychonous mode is enabled, the provided callback method
+is called by a background thread managed by the xbee package.
+Make sure that updates to external state are thread-safe.</p>
+</div>
+<p>Note that a background thread is automatically started
+to handle receiving and processing incoming data from an
+XBee device. This example is functionally equivalent to the non-asyncronous
+example above.</p>
+</div>
+<div class="section" id="additional-examples">
+<h3>Additional Examples<a class="headerlink" href="#additional-examples" title="Permalink to this headline">¶</a></h3>
+<p>For additional examples, look in the examples/ directory contained
+within the xbee package source code archive or source control.</p>
+</div>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="frame-data-format">
+<h3>Frame Data Format<a class="headerlink" href="#frame-data-format" title="Permalink to this headline">¶</a></h3>
+<p>Information returned from this library is a dictionary in the following
+format:</p>
+<div class="highlight-python"><pre>{'id':str,
+ 'param':binary data,
+ ...}</pre>
+</div>
+<p>The id field is always a human-readable name of the packet type received.
+All following fields, shown above with the key &#8216;param&#8217;, map binary data to
+each of the possible fields contained within the received data frame.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A listing of all supported data frames and their respective fields may be
+found in xbee.ieee.XBee (or xbee.zigbee.ZigBee for XBee ZB devices)
+defined as api_responses.</p>
+</div>
+</div>
+<div class="section" id="sample-data-format">
+<h3>Sample Data Format<a class="headerlink" href="#sample-data-format" title="Permalink to this headline">¶</a></h3>
+<p>Sample data is returned in the following format:</p>
+<div class="highlight-python"><pre>[ {"dio-0":True,
+   "dio-1":False,
+   "adc-0":100"}, ...]</pre>
+</div>
+<p>This format is a list of dictionaries. Each dictionary represents one
+sample, listed in chronological order. Each sample dictionary can contain
+any number of digital (dio) and analog (adc) pin samples. The keys of a
+sample dictionary will always follow this pattern:</p>
+<div class="highlight-python"><pre>(dio|adc)-[0-9]+</pre>
+</div>
+<p>The number of dio and adc values returned depends upon the type and
+configuration of the XBee device used with this library.</p>
+</div>
+<div class="section" id="response-parsing">
+<h3>Response Parsing<a class="headerlink" href="#response-parsing" title="Permalink to this headline">¶</a></h3>
+<p><em>As of version 2.1.0</em></p>
+<p>For XBee devices, sample data within I/O sample messages is automatically
+parsed into the above format. In addition, when an &#8220;IS&#8221;, Force Sample,
+AT command is issued, either to a local device or a remote device, the
+value of the &#8220;parameter&#8221; field in the response will be automatically
+parsed as I/O sample data.</p>
+<p>ZigBee devices extend this behavior to include automatic parsing of
+&#8220;ND&#8221;, Node Discover, AT command responses. The parameter field of a
+ND AT response will assume the following format:</p>
+<div class="highlight-python"><pre>{"source_addr":      two bytes,
+ "source_addr_long": eight bytes,
+ "node_identifier":  string,
+ "parent_address":   two bytes,
+ "device_type":      one byte,
+ "status":           one byte,
+ "profile_id":       two bytes,
+ "manufacturer":     two bytes,
+}</pre>
+</div>
+</div>
+<div class="section" id="sending-data-to-an-xbee-device">
+<h3>Sending Data to an XBee Device<a class="headerlink" href="#sending-data-to-an-xbee-device" title="Permalink to this headline">¶</a></h3>
+<p>In order to send data to an XBee device, use the send() method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xbee</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;at&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s">&#39;MY&#39;</span><span class="p">,</span> <span class="n">parameter</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example will request the 16-bit address of the connected XBee
+device with an API frame marker of &#8216;A&#8217;.</p>
+<p>For your convenience, some optional data fields are not required.
+For example, the &#8216;parameter&#8217; field may be ommitted if empty:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xbee</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;at&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s">&#39;MY&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Additionally, an alternate syntax is provided for all
+supported commands::</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xbee</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">frame</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s">&#39;MY&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This example is functionally equivalent to the line(s) above.</p>
+<p>Lastly, if an API frame identifier is not needed, the command
+may be reduced to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">xbee</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="s">&#39;MY&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A listing of all supported commands and their associated data fields
+may be found in xbee.ieee.XBee (xbee.zigbee.ZigBee for XBee ZB devices)
+defined as api_commands.</p>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h3>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="xbee.base.XBeeBase">
+<em class="property">class </em><tt class="descclassname">xbee.base.</tt><tt class="descname">XBeeBase</tt><big>(</big><em>ser</em>, <em>shorthand=True</em>, <em>callback=None</em>, <em>escaped=False</em><big>)</big><a class="headerlink" href="#xbee.base.XBeeBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class providing command generation and response
+parsing methods for XBee modules.</p>
+<dl class="docutils">
+<dt>Constructor arguments:</dt>
+<dd><p class="first">ser:    The file-like serial port to use.</p>
+<dl class="last docutils">
+<dt>shorthand: boolean flag which determines whether shorthand command </dt>
+<dd>calls (i.e. xbee.at(...) instead of xbee.send(&#8220;at&#8221;,...) 
+are allowed.</dd>
+<dt>callback: function which should be called with frame data</dt>
+<dd>whenever a frame arrives from the serial port.
+When this is not None, a background thread to monitor
+the port and call the given function is automatically
+started.</dd>
+<dt>escaped: boolean flag which determines whether the library should</dt>
+<dd>operate in escaped mode. In this mode, certain data bytes
+in the output and input streams will be escaped and unescaped
+in accordance with the XBee API. This setting must match
+the appropriate api_mode setting of an XBee device; see your
+XBee device&#8217;s documentation for more information.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="xbee.base.XBeeBase.halt">
+<tt class="descname">halt</tt><big>(</big><big>)</big><a class="headerlink" href="#xbee.base.XBeeBase.halt" title="Permalink to this definition">¶</a></dt>
+<dd><p>halt: None -&gt; None</p>
+<p>If this instance has a separate thread running, it will be
+halted. This method will wait until the thread has cleaned
+up before returning.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xbee.base.XBeeBase.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#xbee.base.XBeeBase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run: None -&gt; None</p>
+<p>This method overrides threading.Thread.run() and is automatically
+called when an instance is created with threading enabled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xbee.base.XBeeBase.send">
+<tt class="descname">send</tt><big>(</big><em>cmd</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#xbee.base.XBeeBase.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>send: string param=binary data ... -&gt; None</p>
+<p>When send is called with the proper arguments, an API command
+will be written to the serial port for this XBee device
+containing the proper instructions and data.</p>
+<p>This method must be called with named arguments in accordance
+with the api_command specification. Arguments matching all 
+field names other than those in reserved_names (like &#8216;id&#8217; and
+&#8216;order&#8217;) should be given, unless they are of variable length 
+(of &#8216;None&#8217; in the specification. Those are optional).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xbee.base.XBeeBase.wait_read_frame">
+<tt class="descname">wait_read_frame</tt><big>(</big><big>)</big><a class="headerlink" href="#xbee.base.XBeeBase.wait_read_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>wait_read_frame: None -&gt; frame info dictionary</p>
+<p>wait_read_frame calls XBee._wait_for_frame() and waits until a
+valid frame appears on the serial port. Once it receives a frame,
+wait_read_frame attempts to parse the data contained within it
+and returns the resulting dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbee.XBee">
+<em class="property">class </em><tt class="descclassname">xbee.</tt><tt class="descname">XBee</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#xbee.XBee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an implementation of the XBee API for IEEE 802.15.4 modules
+with recent firmware.</p>
+<p>Commands may be sent to a device by instansiating this class with
+a serial port object (see PySerial) and then calling the send
+method with the proper information specified by the API. Data may
+be read from a device syncronously by calling wait_read_frame. For
+asynchronous reads, see the definition of XBeeBase.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbee.zigbee.ZigBee">
+<em class="property">class </em><tt class="descclassname">xbee.zigbee.</tt><tt class="descname">ZigBee</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#xbee.zigbee.ZigBee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an implementation of the XBee API for XBee ZB (ZigBee) modules
+with recent firmware.</p>
+<p>Commands may be sent to a device by instantiating this class with
+a serial port object (see PySerial) and then calling the send
+method with the proper information specified by the API. Data may
+be read from a device synchronously by calling wait_read_frame.
+For asynchronous reads, see the defintion of XBeeBase.</p>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to python-xbee&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#synchonous-mode">Synchonous Mode</a></li>
+<li><a class="reference internal" href="#asynchronous-mode">Asynchronous Mode</a></li>
+<li><a class="reference internal" href="#additional-examples">Additional Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#frame-data-format">Frame Data Format</a></li>
+<li><a class="reference internal" href="#sample-data-format">Sample Data Format</a></li>
+<li><a class="reference internal" href="#response-parsing">Response Parsing</a></li>
+<li><a class="reference internal" href="#sending-data-to-an-xbee-device">Sending Data to an XBee Device</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">python-xbee 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Paul Malmsten.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>
