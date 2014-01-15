@@ -1,20 +1,27 @@
 //PWM Controller SystemVerilog description
 
 module pwm
-  #(PARAMETER FREQ = 100)
-   (input logic [7:0] duty_cycle,
+  #(parameter FREQ = 17'd100_000, FREQ_BITS = 17)
+   (input logic [6:0] duty_cycle,
     input logic en, clk, clr,
-    output logic out);
+    output logic out,
+    output logic [FREQ_BITS-1:0] clock_count,
+    output logic [6:0] segments);
 
-   logic [7:0] 	 dc_out, segments;
+   logic seg_inc; 
+   logic [6:0] dc_out; 
+   //logic [6:0] segments;
+   //logic [FREQ_BITS-1:0] clock_count;
    
-   pipo_reg dc(.D(duty_cycle), .Q(dc_out), .clk(clk), .clr(clr));
-   counter seg_counts(.en(), .Q(segments), .clk(clk), .clr(clr));
-   counter clock_counts(.en(1'b1), 
+   assign seg_inc = (clock_count == FREQ);
 
+   pipo_reg #(7) dc(.D(duty_cycle), .Q(dc_out), .clk(clk), .clr(clr),.load(en));
 
-   assign out = dc_out > segments;
-   
+   limit_counter #(FREQ_BITS) clock_counts(.en(1'b1), .Q(clock_count), 
+                                         .clk(clk), .clr(clr),.limit(FREQ));
 
+   limit_counter #(7) seg_counts(.en(seg_inc), .Q(segments), .clk(clk), .clr(clr), .limit(7'd100));
+
+   assign out = dc_out > segments;  
 
 endmodule: pwm
