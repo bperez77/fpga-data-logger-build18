@@ -91,3 +91,13 @@ module limit_counter
       end
 
 endmodule: limit_counter
+
+module is_equal
+    #(parameter WIDTH=8)
+    (input  logic [WIDTH-1:0] A,
+     input  logic [WIDTH-1:0] B,
+     output logic equal);
+
+     assign equal = A == B;
+
+endmodule: is_equal 
