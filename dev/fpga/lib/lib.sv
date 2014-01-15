@@ -71,3 +71,23 @@ module counter
    assign Qup = Q + 1'd1;
 
 endmodule: counter
+
+module limit_counter
+ #(parameter WIDTH = 8)
+  (input  logic clk,
+   input  logic en,clr,
+   input  logic [WIDTH-1:0] limit,
+   output logic [WIDTH-1:0] Q);
+
+  always_ff @(posedge clk)
+    if (clr)
+      Q <= 0;
+    else if (en)
+      begin
+      if (Q == limit)
+        Q <= 0;
+      else
+        Q <= Q + 1;
+      end
+
+endmodule: limit_counter
