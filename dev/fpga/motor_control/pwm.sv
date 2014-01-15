@@ -5,8 +5,6 @@ module pwm
    (input logic [6:0] duty_cycle,
     input logic en, clk, clr,
     output logic out);
-    //output logic [FREQ_BITS-1:0] clock_count,
-    //output logic [6:0] segments);
 
    logic seg_inc; 
    logic [6:0] dc_out; 
