@@ -3,14 +3,12 @@
 module pwm_testbench;
   logic clk, clr, en, out;
   logic [6:0] duty_cycle;
-  logic [6:0] clock_count;
-  logic [6:0] segments;
 
-  pwm p1(.*);
+  pwm #(7'd10,7) p1(.*);
 
   initial begin
   $monitor($time, " clock_count=%d, clr=%b, en=%b, duty_cycle=%d, segments=%d, out=%b",
-                  clock_count, clr, en, duty_cycle, segments, out);
+                  p1.clock_count, clr, en, duty_cycle, p1.segments, out);
   clk = 0;
   forever #1 clk = ~clk;
   end
@@ -25,7 +23,7 @@ module pwm_testbench;
   @(posedge clk);
   en <= 0;
   @(posedge clk);
-  #1000;
+  #5000;
   $finish;
   end
 
