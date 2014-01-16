@@ -22,6 +22,7 @@ module uart
 		rx_clr, tx_clr, start_tx, start_rx; 
 
    logic [$clog2(SYNC)-1:0] count_t, count_r;
+   logic [DATA+1:0] 	    read_count;
    
    //Timing parameters
    localparam SYNC = (CLOCK / BAUD) - 1;
@@ -39,11 +40,12 @@ module uart
    //FSM status signal hardware
    counter #(.WIDTH($clog2(SYNC))) transmit(.en(1'b1), .clr(start_tx), .clk(clk), .Q(count_t));
    counter #(.WIDTH($clog2(SYNC))) receive(.en(1'b1), .clr(start_rx), .clk(clk), .Q(count_r));
-
+   counter #(.WIDTH(DATA+2)) rx_count(.en(read), .clr(rst), .clk(clk), .Q(read_count));
+   
    assign read_align = (count_r == ALIGN);
    assign read = (count_r == SYNC);
    assign trans = (count_t == SYNC);
-   assign rx_done = (data_rec[9] & ~data_rec[0]);
+   assign rx_done = (read_count == DATA+2);
    assign tx_done = (tx_status == 'd0);
    assign error = (data_rec[9] & data_rec[0]); 
    
