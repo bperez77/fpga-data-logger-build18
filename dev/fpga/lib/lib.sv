@@ -72,6 +72,19 @@ module counter
 
 endmodule: counter
 
+module mux
+  (input logic D0, D1, sel,
+   output logic Y);
+
+   always_comb begin
+      if(sel)
+	Y = D1;
+      else
+	Y = D0;
+   end
+
+endmodule: mux
+
 module limit_counter
  #(parameter WIDTH = 8)
   (input  logic clk,

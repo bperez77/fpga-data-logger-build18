@@ -94,7 +94,10 @@ module rx_control
 	WAIT: rx_clr = 1'b1;
 	START: start_rx = 1'b1;
 	SYNC: ; //Do nothing
-	READ: load_rx = 1'b1;
+	READ: begin 
+	   load_rx = 1'b1;
+	   start_rx = 1'b1;
+	end
 	PAUSE: ; //Do nothing
 	DONE: begin 
 	   load_rx2 = 1'b1; 
@@ -148,12 +151,15 @@ module tx_control
       case(current_state)
 	WAIT: begin
 	   tx_clr = 1'b1;
-	   start_tx = 1'b1;
 	end
 	LOAD: begin 
-	   load_tx = 1'b1; 
+	   load_tx = 1'b1;
+	   start_tx = 1'b1;
 	end
-	SHIFT: shift_tx = 1'b1;
+	SHIFT: begin
+	   shift_tx = 1'b1;
+	   start_tx = 1'b1;
+	end
 	PAUSE: ;
       endcase // case (current_state)
    end // always_comb begin
