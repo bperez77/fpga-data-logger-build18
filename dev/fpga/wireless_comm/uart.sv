@@ -29,10 +29,10 @@ module uart
    
    //Datapath components
    pipo_reg #(.WIDTH(DATA)) received(.D(data_rec[8:1]), .Q(data_out), 
-				     .load(load_rx2), .clr(1'b0), .clk(clk));
-   sipo_reg #(.WIDTH(DATA+2)) rxdata(.d_in(rx), .Q(data_rec), .en(load_rx), .clr(rx_clr), .clk(clk));
+				     .load(load_rx2), .clr(rst), .clk(clk));
+   sipo_reg #(.WIDTH(DATA+2)) rxdata(.d_in(rx), .Q(data_rec), .en(load_rx), .clr(rx_clr | rst), .clk(clk));
    piso_reg #(.WIDTH(DATA+2)) txdata(.D({1'b1, data_in, 1'b1}), .Q(tx_status), .load(load_tx), 
-				     .shift(shift_tx), .clr(tx_clr), .clk(clk), .out(tx));
+				     .shift(shift_tx), .clr(tx_clr | rst), .clk(clk), .out(tx));
 
    //FSM status signal hardware
    counter #(.WIDTH($clog2(SYNC))) transmit(.en(1'b1), .clr(start_tx), .clk(clk), .Q(count_t));
