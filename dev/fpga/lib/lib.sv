@@ -26,7 +26,7 @@ module piso_reg
     output logic out);
    
 
-   assign out = Q[WIDTH-1];
+   assign out = Q[0];
    
    always_ff @(posedge clk) begin
       if (clr)
@@ -34,7 +34,7 @@ module piso_reg
       else if (load)
 	Q <= D;
       else if (shift)
-	Q <=  Q << 1 | 1'b0;
+	Q <=  Q >> 1 | 1'b0;
    end      
 
 endmodule: piso_reg
@@ -48,7 +48,7 @@ module sipo_reg
    
    always_ff @(posedge clk) begin
       if (en & ~clr)
-	Q <= (Q << 1) | d_in;
+	Q <= {d_in, Q[WIDTH-1:1]};
       else if (clr)
 	Q <= 'b0;
    end

@@ -115,8 +115,8 @@ module DE0_Nano
    //input [2:0] 	 GPIO_2_IN;
    
    //////////// GPIO_0, GPIO_0 connect to GPIO Default //////////
-   inout [33:0]  GPIO_0_D;
-   input [1:0] 	 GPIO_0_IN;
+   inout [33:0]  	GPIO_0_D;
+   input [1:0] 	GPIO_0_IN;
    
    //////////// GPIO_1, GPIO_1 connect to GPIO Default //////////
    //inout [33:0]  GPIO_1;
@@ -124,24 +124,21 @@ module DE0_Nano
    
    //////////////////////////////////////////////////////////////
    
-   logic 	 rx1, tx1, data_ready1, trigger;
-   logic 	 rx2, tx2, data_ready2;	 
-   logic [7:0] 	 data_out1, data_out2;
+   logic 	 rx1, tx1, data_ready1, trigger;	 
+   logic [7:0] 	 data_out1;
 	logic [$clog2(50000000)-1:0] counted;
    
 	counter #(.WIDTH ($clog2(50000000))) count(.en(1'b1), .clk(CLOCK_50), .Q(counted), .clr(~KEY[1]));
 	
 	assign trigger = counted == 49999999;
-   assign LED[7:0] = data_out2;
+   assign LED[7:0] = data_out1;
    assign GPIO_0_D[0] = tx1;
-   
+   assign rx1 = GPIO_0_D[1];
+	
    uart #(.CLOCK(50000000), .BAUD(9600)) ser1(.rx(rx1), .new_data(trigger), .clk(CLOCK_50), 
-					      .rst(~KEY[1]), .data_in(8'b10000010), 
+					      .rst(~KEY[1]), .data_in(8'b01000001), 
 					      .data_out(data_out1), .tx(tx1), .data_ready(data_ready1));
    
-   uart #(.CLOCK(50000000), .BAUD(9600)) ser2(.rx(tx1), .new_data(data_ready2), .clk(CLOCK_50), .
-					      rst(~KEY[1]), .data_in(data_out2),
-					      .data_out(data_out2), .tx(rx1), .data_ready(data_ready2));
    
 
    
