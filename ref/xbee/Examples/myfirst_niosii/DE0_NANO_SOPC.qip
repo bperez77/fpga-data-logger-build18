@@ -1,0 +1,10 @@
+# clk_50
+# cpu
+set_global_assignment -name SDC_FILE [file join $::quartus(qip_path) cpu.sdc]
+set_global_assignment -name SOURCE_FILE [file join $::quartus(qip_path) cpu.ocp]
+# jtag_uart
+# onchip_memory2
+# pio_led
+# null
+set_global_assignment -name SOPC_BUILDER_SIGNATURE_ID E0CB4EC7F4290000012E4829DBCB 
+ 
