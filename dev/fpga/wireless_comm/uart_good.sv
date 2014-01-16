@@ -18,11 +18,10 @@ module uart
    logic 	read_align, read, trans, rx_done, tx_done, error;
    
    //Control Signals
-   logic 	load_tx, load_rx2, load_rx, shift_tx, tx_out,
+   logic 	load_tx, load_rx2, load_rx, shift_tx,
 		rx_clr, tx_clr, start_tx, start_rx; 
 
    logic [$clog2(SYNC)-1:0] count_t, count_r;
-   logic [DATA+1:0] 	    read_count;
    
    //Timing parameters
    localparam SYNC = (CLOCK / BAUD) - 1;
@@ -32,22 +31,19 @@ module uart
    pipo_reg #(.WIDTH(DATA)) received(.D(data_rec[8:1]), .Q(data_out), 
 				     .load(load_rx2), .clr(rst), .clk(clk));
    sipo_reg #(.WIDTH(DATA+2)) rxdata(.d_in(rx), .Q(data_rec), .en(load_rx), .clr(rx_clr | rst), .clk(clk));
-   piso_reg #(.WIDTH(DATA+2)) txdata(.D({1'b1, data_in, 1'b0}), .Q(tx_status), .load(load_tx), 
-				     .shift(shift_tx), .clr(tx_clr | rst), .clk(clk), .out(tx_out));
-   
-   mux tx_sel(.sel(tx_clr), .D0(tx_out), .D1(1'b1), .Y(tx)); //Hold tx line high in between packets
+   piso_reg #(.WIDTH(DATA+2)) txdata(.D({1'b1, data_in, 1'b1}), .Q(tx_status), .load(load_tx), 
+				     .shift(shift_tx), .clr(tx_clr | rst), .clk(clk), .out(tx));
 
    //FSM status signal hardware
    counter #(.WIDTH($clog2(SYNC))) transmit(.en(1'b1), .clr(start_tx), .clk(clk), .Q(count_t));
    counter #(.WIDTH($clog2(SYNC))) receive(.en(1'b1), .clr(start_rx), .clk(clk), .Q(count_r));
-   counter #(.WIDTH(DATA+2)) rx_count(.en(read), .clr(rx_clr | rst), .clk(clk), .Q(read_count));
-   
+
    assign read_align = (count_r == ALIGN);
    assign read = (count_r == SYNC);
    assign trans = (count_t == SYNC);
-   assign rx_done = (read_count == DATA+1);
+   assign rx_done = (data_rec[9] & data_rec[0]);
    assign tx_done = (tx_status == 'd0);
-   assign error = (data_rec[9] & data_rec[0]); 
+   assign error = (~data_rec[9] & data_rec[0]); 
    
    //Control FSM
    rx_control rx_ctrl(.*);
@@ -66,7 +62,7 @@ module rx_control
    //next state logic
    always_comb begin
       case(current_state)
-	WAIT: next_state = (~rx) ? START : WAIT; //Start bit is asserted low
+	WAIT: next_state = (rx) ? START : WAIT;
 	START: next_state = SYNC;
 	SYNC: next_state = (read_align) ? READ : SYNC;
 	READ: next_state = PAUSE;
@@ -96,8 +92,8 @@ module rx_control
 	WAIT: rx_clr = 1'b1;
 	START: start_rx = 1'b1;
 	SYNC: ; //Do nothing
-	READ: begin 
-	   load_rx = 1'b1;
+	READ: begin
+	   load_rx = 1'b1; 
 	   start_rx = 1'b1;
 	end
 	PAUSE: ; //Do nothing
