@@ -2,7 +2,7 @@ module pwm
   #(parameter CLOCK = 50000000, WIDTH = 8, FREQ = 100)
    (input logic [WIDTH-1:0] duty_cycle, 
     input logic clr, clk, 
-    output logic pwm);
+    output logic pwm, new_dc);
 
    localparam PULSE_SIZE = CLOCK / FREQ;
    localparam CHUNK_SIZE = PULSE_SIZE / (2**WIDTH);
@@ -18,6 +18,7 @@ module pwm
 
    assign chunk = (clocks == CHUNK_SIZE-1);
    assign pwm = (chunk_count < duty_cycle);
+   assign new_dc = chunk_count == MAX_CHUNKS - 2;
    
 endmodule: pwm
 
