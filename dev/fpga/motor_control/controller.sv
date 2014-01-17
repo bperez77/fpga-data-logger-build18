@@ -8,7 +8,7 @@ module controller
      output logic [6:0] rear_motor, front_motor, servo);    // Goes to the Pulse Width Modulators
 
      logic load_motor, load_servo, load_servo_pwm;
-     logic clr_rear, clr_front, clr_servo, clr_timeout;
+     logic clr_rear, clr_front, clr_servo, clr_timeout, clr_packet;
      logic clr_count, timeout, packet_missed;
      logic [6:0] motor_out, servo_out, servo_control;
      logic [$clog2(LIMIT)-1:0] clock_count;
@@ -54,7 +54,7 @@ module control_FSM
     (input  logic clk, rst, data_ready, timeout,
      output logic clr_timeout, clr_rear, clr_front, clr_servo);
 
-    enum logic [1:0] {WAIT = 1'b0, OFF = 1'b1} state, next_state;
+    enum logic {WAIT = 1'b0, OFF = 1'b1} state, next_state;
 
     // DFF's
     always_ff @(posedge clk)
