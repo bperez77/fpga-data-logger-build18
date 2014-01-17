@@ -92,7 +92,7 @@ def keyPressed(canvas, event):
         canvas.data.move_arrow_right = True
     elif (event.keysym == 's'):
         canvas.data.throttle_level = 0
-        canvas.data.angle = 0.0
+        canvas.data.angle = 0
     elif (event.keysym == 'm'):
         canvas.data.control_mode = not canvas.data.control_mode
     elif (event.keysym == 'c'):
@@ -176,12 +176,12 @@ def drawThrottle(canvas):
 
     width_margin = 50
     height_margin = 10
-    rect_height = (5.0/6*height - 1.0/3*height - 2*height_margin) / 10
+    rect_height = (5.0/6*height - 1.0/3*height - 2*height_margin) / 20
 
     canvas.create_rectangle(width_margin, 1.0/3*height+height_margin, 
                             1.0/3*width-width_margin, 5.0/6*height-height_margin, 
                             fill="white")
-    for i in xrange(10):
+    for i in xrange(20):
         top_left = (width_margin, 5.0/6*height - height_margin - 
                     rect_height*(i+1))
         bottom_right = (1.0/3*width - width_margin, 5.0/6*height - height_margin
@@ -201,7 +201,7 @@ def drawData(canvas):
                        font=("Helvetica", 16, "bold"))
     canvas.create_text(5/6.0*width, 2.0/3*height, anchor=CENTER, text="Acceleration:",
                        font=("Helvetica", 16, "bold"))
-    canvas.create_text(5/6.0*width, 5.0/6*height - 30, anchor=CENTER, text=str(round(acceleration, 1))+" g",
+    canvas.create_text(5/6.0*width, 5.0/6*height - 30, anchor=CENTER, text=str(round(acceleration, 3))+" g",
                        font=("Helvetica", 16, "bold"))
                         
 #------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ def timerFired(canvas):
 def checkEvents(canvas):
     if (canvas.data.inc_throttle):
         canvas.data.inc_throttle = False
-        if (canvas.data.throttle_level < 10):
+        if (canvas.data.throttle_level < 20):
             canvas.data.throttle_level += 1
     elif (canvas.data.dec_throttle):
         canvas.data.dec_throttle = False
@@ -267,20 +267,20 @@ def sendControlCommands(canvas):
     # Throttle: 0<duty_cycle>
     # Steering: 1<duty_cycle>
     # Note that 0 <= duty_cycle <= 100; it is a percentage
-    throttle = int(round(canvas.data.throttle_level * 3.5))
-    steering_pulse = ((0.1/10*canvas.data.angle + 1.40)/20) * 100
+    throttle = int(round(canvas.data.throttle_level * 127.0/20))
+    steering_pulse = ((0.1/10*canvas.data.angle + 1.40)/20) * 127
     steering_pulse = int(round(steering_pulse, 0))
     throttle_command = chr(throttle)
     steering_command = chr(1 << 7 | steering_pulse)
     
-    #xbee.write(steering_command)
+    xbee.write(steering_command)
     xbee.write(throttle_command)
-    xbee.flushOutput()
 
 #------------------------------------------------------------------------------   
 def updateInfo(canvas):
     xbee = canvas.data.xbee
     buf = xbee.read(1)
+    # Make sure there is data to be read.
     if (buf != ''):
         if (canvas.data.timer_counter % 2 == 0):
             canvas.data.speed = ord(buf) 
@@ -292,7 +292,7 @@ def logData(canvas):
     (speed, acceleration) = canvas.data.speed
     f_write = canvas.data.f_write
     curr_time = time()
-    fmt_str = "%s: %s %s\n"
+    fmt_str = "%s: %s %s \n"
     f_write.write(fmt_str % (curr_time, speed, acceleration)) 
 
 #------------------------------------------------------------------------------
@@ -301,5 +301,6 @@ def main():
 
     start_gui()
 
+#------------------------------------------------------------------------------
 if (__name__ == '__main__'):
     main()
