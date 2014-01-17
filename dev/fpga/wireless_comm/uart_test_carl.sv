@@ -31,6 +31,7 @@ module test_bench();
       for(int i = 0; i < 1000000; i++)
 	@(posedge clk);
       @(posedge clk);
+      /*
       data_in <= 8'd110;
       @(posedge clk);
       new_data <= 1'b1;
@@ -42,6 +43,7 @@ module test_bench();
       @(posedge clk);
       for (int i = 0; i < 1000000; i++)
 	@(posedge clk);
+       */
       @(posedge clk);
       #3 $finish;
    end
