@@ -86,19 +86,18 @@ module mux
 endmodule: mux
 
 module limit_counter
- #(parameter WIDTH = 8)
+ #(parameter WIDTH = 8, LIMIT = $pow(2, WIDTH))
   (input  logic clk,
    input  logic en,clr,
-   input  logic [WIDTH-1:0] limit,
    output logic [WIDTH-1:0] Q);
 
   always_ff @(posedge clk)
     if (clr)
-      Q <= 0;
+      Q <= 'd0;
     else if (en)
       begin
-      if (Q == limit)
-        Q <= 0;
+      if (Q == LIMIT)
+        Q <= 'd0;
       else
         Q <= Q + 1;
       end
