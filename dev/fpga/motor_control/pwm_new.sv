@@ -22,7 +22,7 @@ module pwm
    
 endmodule: pwm
 
-module pwm_test();
+/*module pwm_test();
    logic [7:0] duty_cycle;
    logic       clr, clk, pwm;
 
@@ -58,6 +58,6 @@ module pwm_test();
       $finish;
    end // initial begin
 
-endmodule: pwm_test
+endmodule: pwm_test */
 
       
