@@ -1,0 +1,990 @@
+Analysis & Synthesis report for DE0_Nano
+Fri Jan 17 14:29:04 2014
+Quartus II 32-bit Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |DE0_Nano|uart:ser1|tx_control:tx_ctrl|current_state
+  9. State Machine - |DE0_Nano|uart:ser1|rx_control:rx_ctrl|current_state
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for User Entity Instance: counter:count
+ 14. Parameter Settings for User Entity Instance: uart:ser1
+ 15. Parameter Settings for User Entity Instance: uart:ser1|pipo_reg:received
+ 16. Parameter Settings for User Entity Instance: uart:ser1|sipo_reg:rxdata
+ 17. Parameter Settings for User Entity Instance: uart:ser1|piso_reg:txdata
+ 18. Parameter Settings for User Entity Instance: uart:ser1|counter:transmit
+ 19. Parameter Settings for User Entity Instance: uart:ser1|counter:receive
+ 20. Parameter Settings for User Entity Instance: uart:ser1|counter:rx_count
+ 21. Parameter Settings for User Entity Instance: pwm:m1
+ 22. Parameter Settings for User Entity Instance: pwm:m1|limit_counter:clk_cnt
+ 23. Parameter Settings for User Entity Instance: pwm:m1|limit_counter:chnk_cnt
+ 24. Parameter Settings for User Entity Instance: pwm:m2
+ 25. Parameter Settings for User Entity Instance: pwm:m2|limit_counter:clk_cnt
+ 26. Parameter Settings for User Entity Instance: pwm:m2|limit_counter:chnk_cnt
+ 27. Parameter Settings for User Entity Instance: pwm:servo
+ 28. Parameter Settings for User Entity Instance: pwm:servo|limit_counter:clk_cnt
+ 29. Parameter Settings for User Entity Instance: pwm:servo|limit_counter:chnk_cnt
+ 30. Parameter Settings for User Entity Instance: controller:cntrl
+ 31. Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:motor_reg
+ 32. Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:servo_reg
+ 33. Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:rear_reg
+ 34. Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:front_reg
+ 35. Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:servo_out_reg
+ 36. Parameter Settings for User Entity Instance: controller:cntrl|counter:timeout_count
+ 37. Parameter Settings for User Entity Instance: controller:cntrl|counter:packet_time
+ 38. Port Connectivity Checks: "controller:cntrl|counter:timeout_count"
+ 39. Port Connectivity Checks: "controller:cntrl|pipo_reg:servo_out_reg"
+ 40. Port Connectivity Checks: "pwm:servo|limit_counter:clk_cnt"
+ 41. Port Connectivity Checks: "pwm:servo"
+ 42. Port Connectivity Checks: "pwm:m1|limit_counter:clk_cnt"
+ 43. Port Connectivity Checks: "uart:ser1|counter:receive"
+ 44. Port Connectivity Checks: "uart:ser1|counter:transmit"
+ 45. Port Connectivity Checks: "uart:ser1|mux:tx_sel"
+ 46. Port Connectivity Checks: "uart:ser1|piso_reg:txdata"
+ 47. Port Connectivity Checks: "uart:ser1"
+ 48. Port Connectivity Checks: "counter:count"
+ 49. Elapsed Time Per Partition
+ 50. Analysis & Synthesis Messages
+ 51. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++---------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                    ;
++------------------------------------+--------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Jan 17 14:29:04 2014      ;
+; Quartus II 32-bit Version          ; 13.1.0 Build 162 10/23/2013 SJ Web Edition ;
+; Revision Name                      ; DE0_Nano                                   ;
+; Top-level Entity Name              ; DE0_Nano                                   ;
+; Family                             ; Cyclone IV E                               ;
+; Total logic elements               ; 277                                        ;
+;     Total combinational functions  ; 270                                        ;
+;     Dedicated logic registers      ; 191                                        ;
+; Total registers                    ; 191                                        ;
+; Total pins                         ; 51                                         ;
+; Total virtual pins                 ; 0                                          ;
+; Total memory bits                  ; 0                                          ;
+; Embedded Multiplier 9-bit elements ; 0                                          ;
+; Total PLLs                         ; 0                                          ;
++------------------------------------+--------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE22F17C6       ;                    ;
+; Top-level entity name                                                      ; DE0_Nano           ; DE0_Nano           ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 2           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ; < 0.1%      ;
+;     Processors 3-4         ;   0.0%      ;
++----------------------------+-------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                            ;
++----------------------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+; File Name with User-Entered Path             ; Used in Netlist ; File Type                    ; File Name with Absolute Path                            ; Library ;
++----------------------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+; ../full_test.sv                              ; yes             ; User SystemVerilog HDL File  ; /home/bmperez/full_test.sv                              ;         ;
+; ../sandbox/uart.sv                           ; yes             ; User SystemVerilog HDL File  ; /home/bmperez/sandbox/uart.sv                           ;         ;
+; ../sandbox/pwm_new.sv                        ; yes             ; User SystemVerilog HDL File  ; /home/bmperez/sandbox/pwm_new.sv                        ;         ;
+; ../sandbox/controller.sv                     ; yes             ; User SystemVerilog HDL File  ; /home/bmperez/sandbox/controller.sv                     ;         ;
+; ../projects/build18_2014/dev/fpga/lib/lib.sv ; yes             ; User SystemVerilog HDL File  ; /home/bmperez/projects/build18_2014/dev/fpga/lib/lib.sv ;         ;
++----------------------------------------------+-----------------+------------------------------+---------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 277            ;
+;                                             ;                ;
+; Total combinational functions               ; 270            ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 64             ;
+;     -- 3 input functions                    ; 41             ;
+;     -- <=2 input functions                  ; 165            ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 146            ;
+;     -- arithmetic mode                      ; 124            ;
+;                                             ;                ;
+; Total registers                             ; 191            ;
+;     -- Dedicated logic registers            ; 191            ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 51             ;
+; Embedded Multiplier 9-bit elements          ; 0              ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 191            ;
+; Total fan-out                               ; 1369           ;
+; Average fan-out                             ; 2.29           ;
++---------------------------------------------+----------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                           ;
++--------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------+--------------+
+; Compilation Hierarchy Node     ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                               ; Library Name ;
++--------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------+--------------+
+; |DE0_Nano                      ; 270 (8)           ; 191 (0)      ; 0           ; 0            ; 0       ; 0         ; 51   ; 0            ; |DE0_Nano                                         ; work         ;
+;    |controller:cntrl|          ; 57 (16)           ; 52 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl                        ; work         ;
+;       |control_FSM:control|    ; 0 (0)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|control_FSM:control    ; work         ;
+;       |counter:packet_time|    ; 4 (4)             ; 3 (3)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|counter:packet_time    ; work         ;
+;       |counter:timeout_count|  ; 20 (20)           ; 20 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|counter:timeout_count  ; work         ;
+;       |pipo_reg:front_reg|     ; 8 (8)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|pipo_reg:front_reg     ; work         ;
+;       |pipo_reg:motor_reg|     ; 8 (8)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|pipo_reg:motor_reg     ; work         ;
+;       |pipo_reg:servo_out_reg| ; 0 (0)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|pipo_reg:servo_out_reg ; work         ;
+;       |pipo_reg:servo_reg|     ; 1 (1)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|controller:cntrl|pipo_reg:servo_reg     ; work         ;
+;    |counter:count|             ; 26 (26)           ; 26 (26)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|counter:count                           ; work         ;
+;    |pwm:m1|                    ; 34 (10)           ; 19 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:m1                                  ; work         ;
+;       |limit_counter:chnk_cnt| ; 11 (11)           ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:m1|limit_counter:chnk_cnt           ; work         ;
+;       |limit_counter:clk_cnt|  ; 13 (13)           ; 12 (12)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:m1|limit_counter:clk_cnt            ; work         ;
+;    |pwm:servo|                 ; 41 (13)           ; 20 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:servo                               ; work         ;
+;       |limit_counter:chnk_cnt| ; 7 (7)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:servo|limit_counter:chnk_cnt        ; work         ;
+;       |limit_counter:clk_cnt|  ; 21 (21)           ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|pwm:servo|limit_counter:clk_cnt         ; work         ;
+;    |uart:ser1|                 ; 104 (18)          ; 74 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1                               ; work         ;
+;       |counter:receive|        ; 13 (13)           ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|counter:receive               ; work         ;
+;       |counter:rx_count|       ; 11 (11)           ; 10 (10)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|counter:rx_count              ; work         ;
+;       |counter:transmit|       ; 13 (13)           ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|counter:transmit              ; work         ;
+;       |mux:tx_sel|             ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|mux:tx_sel                    ; work         ;
+;       |pipo_reg:received|      ; 9 (9)             ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|pipo_reg:received             ; work         ;
+;       |piso_reg:txdata|        ; 12 (12)           ; 10 (10)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|piso_reg:txdata               ; work         ;
+;       |rx_control:rx_ctrl|     ; 9 (9)             ; 6 (6)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|rx_control:rx_ctrl            ; work         ;
+;       |sipo_reg:rxdata|        ; 11 (11)           ; 10 (10)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|sipo_reg:rxdata               ; work         ;
+;       |tx_control:tx_ctrl|     ; 7 (7)             ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_Nano|uart:ser1|tx_control:tx_ctrl            ; work         ;
++--------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------+
+; State Machine - |DE0_Nano|uart:ser1|tx_control:tx_ctrl|current_state                                      ;
++---------------------+---------------------+---------------------+--------------------+--------------------+
+; Name                ; current_state.PAUSE ; current_state.SHIFT ; current_state.LOAD ; current_state.WAIT ;
++---------------------+---------------------+---------------------+--------------------+--------------------+
+; current_state.WAIT  ; 0                   ; 0                   ; 0                  ; 0                  ;
+; current_state.LOAD  ; 0                   ; 0                   ; 1                  ; 1                  ;
+; current_state.SHIFT ; 0                   ; 1                   ; 0                  ; 1                  ;
+; current_state.PAUSE ; 1                   ; 0                   ; 0                  ; 1                  ;
++---------------------+---------------------+---------------------+--------------------+--------------------+
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |DE0_Nano|uart:ser1|rx_control:rx_ctrl|current_state                                                                                ;
++---------------------+--------------------+---------------------+--------------------+--------------------+---------------------+--------------------+
+; Name                ; current_state.DONE ; current_state.PAUSE ; current_state.READ ; current_state.SYNC ; current_state.START ; current_state.WAIT ;
++---------------------+--------------------+---------------------+--------------------+--------------------+---------------------+--------------------+
+; current_state.WAIT  ; 0                  ; 0                   ; 0                  ; 0                  ; 0                   ; 0                  ;
+; current_state.START ; 0                  ; 0                   ; 0                  ; 0                  ; 1                   ; 1                  ;
+; current_state.SYNC  ; 0                  ; 0                   ; 0                  ; 1                  ; 0                   ; 1                  ;
+; current_state.READ  ; 0                  ; 0                   ; 1                  ; 0                  ; 0                   ; 1                  ;
+; current_state.PAUSE ; 0                  ; 1                   ; 0                  ; 0                  ; 0                   ; 1                  ;
+; current_state.DONE  ; 1                  ; 0                   ; 0                  ; 0                  ; 0                   ; 1                  ;
++---------------------+--------------------+---------------------+--------------------+--------------------+---------------------+--------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                  ;
++----------------------------------------------+------------------------------------------------------+
+; Register name                                ; Reason for Removal                                   ;
++----------------------------------------------+------------------------------------------------------+
+; controller:cntrl|pipo_reg:rear_reg|Q[6]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[6] ;
+; controller:cntrl|pipo_reg:rear_reg|Q[5]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[5] ;
+; controller:cntrl|pipo_reg:rear_reg|Q[4]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[4] ;
+; controller:cntrl|pipo_reg:rear_reg|Q[3]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[3] ;
+; pwm:m2|limit_counter:chnk_cnt|Q[6]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[6]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[5]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[5]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[4]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[4]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[3]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[3]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[2]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[2]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[1]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[1]       ;
+; pwm:m2|limit_counter:chnk_cnt|Q[0]           ; Merged with pwm:m1|limit_counter:chnk_cnt|Q[0]       ;
+; pwm:m2|limit_counter:clk_cnt|Q[11]           ; Merged with pwm:m1|limit_counter:clk_cnt|Q[11]       ;
+; pwm:m2|limit_counter:clk_cnt|Q[10]           ; Merged with pwm:m1|limit_counter:clk_cnt|Q[10]       ;
+; pwm:m2|limit_counter:clk_cnt|Q[9]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[9]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[8]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[8]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[6]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[6]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[0]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[0]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[7]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[7]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[5]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[5]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[4]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[4]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[3]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[3]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[2]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[2]        ;
+; pwm:m2|limit_counter:clk_cnt|Q[1]            ; Merged with pwm:m1|limit_counter:clk_cnt|Q[1]        ;
+; controller:cntrl|pipo_reg:rear_reg|Q[2]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[2] ;
+; controller:cntrl|pipo_reg:rear_reg|Q[1]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[1] ;
+; controller:cntrl|pipo_reg:rear_reg|Q[0]      ; Merged with controller:cntrl|pipo_reg:front_reg|Q[0] ;
+; uart:ser1|tx_control:tx_ctrl|current_state~2 ; Lost fanout                                          ;
+; uart:ser1|tx_control:tx_ctrl|current_state~3 ; Lost fanout                                          ;
+; uart:ser1|rx_control:rx_ctrl|current_state~2 ; Lost fanout                                          ;
+; uart:ser1|rx_control:rx_ctrl|current_state~3 ; Lost fanout                                          ;
+; uart:ser1|rx_control:rx_ctrl|current_state~4 ; Lost fanout                                          ;
+; Total Number of Removed Registers = 31       ;                                                      ;
++----------------------------------------------+------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 191   ;
+; Number of registers using Synchronous Clear  ; 106   ;
+; Number of registers using Synchronous Load   ; 1     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 82    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |DE0_Nano|uart:ser1|pipo_reg:received|Q[0]          ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_Nano|uart:ser1|counter:rx_count|Q[1]           ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |DE0_Nano|controller:cntrl|pipo_reg:front_reg|Q[2]  ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |DE0_Nano|controller:cntrl|pipo_reg:motor_reg|Q[4]  ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |DE0_Nano|pwm:m1|limit_counter:clk_cnt|Q[3]         ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |DE0_Nano|controller:cntrl|pipo_reg:servo_reg|Q[1]  ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |DE0_Nano|controller:cntrl|counter:packet_time|Q[0] ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; Yes        ; |DE0_Nano|uart:ser1|piso_reg:txdata|Q[2]            ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_Nano|uart:ser1|sipo_reg:rxdata|Q[2]            ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |DE0_Nano|pwm:m1|limit_counter:chnk_cnt|Q[0]        ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |DE0_Nano|uart:ser1|rx_control:rx_ctrl|next_state   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------+
+
+
++------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: counter:count ;
++----------------+-------+-----------------------------------+
+; Parameter Name ; Value ; Type                              ;
++----------------+-------+-----------------------------------+
+; WIDTH          ; 26    ; Signed Integer                    ;
++----------------+-------+-----------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1 ;
++----------------+----------+----------------------------+
+; Parameter Name ; Value    ; Type                       ;
++----------------+----------+----------------------------+
+; CLOCK          ; 50000000 ; Signed Integer             ;
+; BAUD           ; 9600     ; Signed Integer             ;
+; DATA           ; 8        ; Signed Integer             ;
+; STOP           ; 1        ; Signed Integer             ;
++----------------+----------+----------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|pipo_reg:received ;
++----------------+-------+-------------------------------------------------+
+; Parameter Name ; Value ; Type                                            ;
++----------------+-------+-------------------------------------------------+
+; WIDTH          ; 8     ; Signed Integer                                  ;
++----------------+-------+-------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|sipo_reg:rxdata ;
++----------------+-------+-----------------------------------------------+
+; Parameter Name ; Value ; Type                                          ;
++----------------+-------+-----------------------------------------------+
+; WIDTH          ; 10    ; Signed Integer                                ;
++----------------+-------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|piso_reg:txdata ;
++----------------+-------+-----------------------------------------------+
+; Parameter Name ; Value ; Type                                          ;
++----------------+-------+-----------------------------------------------+
+; WIDTH          ; 10    ; Signed Integer                                ;
++----------------+-------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|counter:transmit ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; WIDTH          ; 13    ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|counter:receive ;
++----------------+-------+-----------------------------------------------+
+; Parameter Name ; Value ; Type                                          ;
++----------------+-------+-----------------------------------------------+
+; WIDTH          ; 13    ; Signed Integer                                ;
++----------------+-------+-----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart:ser1|counter:rx_count ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; WIDTH          ; 10    ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m1 ;
++----------------+----------+-------------------------+
+; Parameter Name ; Value    ; Type                    ;
++----------------+----------+-------------------------+
+; CLOCK          ; 50000000 ; Signed Integer          ;
+; WIDTH          ; 7        ; Signed Integer          ;
+; FREQ           ; 100      ; Signed Integer          ;
++----------------+----------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m1|limit_counter:clk_cnt ;
++----------------+-------+--------------------------------------------------+
+; Parameter Name ; Value ; Type                                             ;
++----------------+-------+--------------------------------------------------+
+; WIDTH          ; 12    ; Signed Integer                                   ;
+; LIMIT          ; 3906  ; Signed Integer                                   ;
++----------------+-------+--------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m1|limit_counter:chnk_cnt ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                    ;
+; LIMIT          ; 127   ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m2 ;
++----------------+----------+-------------------------+
+; Parameter Name ; Value    ; Type                    ;
++----------------+----------+-------------------------+
+; CLOCK          ; 50000000 ; Signed Integer          ;
+; WIDTH          ; 7        ; Signed Integer          ;
+; FREQ           ; 100      ; Signed Integer          ;
++----------------+----------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m2|limit_counter:clk_cnt ;
++----------------+-------+--------------------------------------------------+
+; Parameter Name ; Value ; Type                                             ;
++----------------+-------+--------------------------------------------------+
+; WIDTH          ; 12    ; Signed Integer                                   ;
+; LIMIT          ; 3906  ; Signed Integer                                   ;
++----------------+-------+--------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:m2|limit_counter:chnk_cnt ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                    ;
+; LIMIT          ; 127   ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:servo ;
++----------------+----------+----------------------------+
+; Parameter Name ; Value    ; Type                       ;
++----------------+----------+----------------------------+
+; CLOCK          ; 50000000 ; Signed Integer             ;
+; WIDTH          ; 7        ; Signed Integer             ;
+; FREQ           ; 50       ; Signed Integer             ;
++----------------+----------+----------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:servo|limit_counter:clk_cnt ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; WIDTH          ; 13    ; Signed Integer                                      ;
+; LIMIT          ; 7812  ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: pwm:servo|limit_counter:chnk_cnt ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                       ;
+; LIMIT          ; 127   ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl ;
++--------------------+----------+-------------------------------+
+; Parameter Name     ; Value    ; Type                          ;
++--------------------+----------+-------------------------------+
+; SERVO_DEFAULT      ; 9        ; Signed Integer                ;
+; CLOCK_FREQ         ; 50000000 ; Signed Integer                ;
+; TRANSMISSION_SPEED ; 50       ; Signed Integer                ;
++--------------------+----------+-------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:motor_reg ;
++----------------+-------+---------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                    ;
++----------------+-------+---------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                          ;
++----------------+-------+---------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:servo_reg ;
++----------------+-------+---------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                    ;
++----------------+-------+---------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                          ;
++----------------+-------+---------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:rear_reg ;
++----------------+-------+--------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                   ;
++----------------+-------+--------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                         ;
++----------------+-------+--------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:front_reg ;
++----------------+-------+---------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                    ;
++----------------+-------+---------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                          ;
++----------------+-------+---------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|pipo_reg:servo_out_reg ;
++----------------+-------+-------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                        ;
++----------------+-------+-------------------------------------------------------------+
+; WIDTH          ; 7     ; Signed Integer                                              ;
++----------------+-------+-------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|counter:timeout_count ;
++----------------+-------+------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                       ;
++----------------+-------+------------------------------------------------------------+
+; WIDTH          ; 20    ; Signed Integer                                             ;
++----------------+-------+------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: controller:cntrl|counter:packet_time ;
++----------------+-------+----------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                     ;
++----------------+-------+----------------------------------------------------------+
+; WIDTH          ; 3     ; Signed Integer                                           ;
++----------------+-------+----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------+
+; Port Connectivity Checks: "controller:cntrl|counter:timeout_count" ;
++------+-------+----------+------------------------------------------+
+; Port ; Type  ; Severity ; Details                                  ;
++------+-------+----------+------------------------------------------+
+; en   ; Input ; Info     ; Stuck at VCC                             ;
++------+-------+----------+------------------------------------------+
+
+
++---------------------------------------------------------------------+
+; Port Connectivity Checks: "controller:cntrl|pipo_reg:servo_out_reg" ;
++------+-------+----------+-------------------------------------------+
+; Port ; Type  ; Severity ; Details                                   ;
++------+-------+----------+-------------------------------------------+
+; clr  ; Input ; Info     ; Stuck at GND                              ;
++------+-------+----------+-------------------------------------------+
+
+
++-------------------------------------------------------------+
+; Port Connectivity Checks: "pwm:servo|limit_counter:clk_cnt" ;
++------+-------+----------+-----------------------------------+
+; Port ; Type  ; Severity ; Details                           ;
++------+-------+----------+-----------------------------------+
+; en   ; Input ; Info     ; Stuck at VCC                      ;
++------+-------+----------+-----------------------------------+
+
+
++----------------------------------------+
+; Port Connectivity Checks: "pwm:servo"  ;
++------+-------+----------+--------------+
+; Port ; Type  ; Severity ; Details      ;
++------+-------+----------+--------------+
+; clr  ; Input ; Info     ; Stuck at GND ;
++------+-------+----------+--------------+
+
+
++----------------------------------------------------------+
+; Port Connectivity Checks: "pwm:m1|limit_counter:clk_cnt" ;
++------+-------+----------+--------------------------------+
+; Port ; Type  ; Severity ; Details                        ;
++------+-------+----------+--------------------------------+
+; en   ; Input ; Info     ; Stuck at VCC                   ;
++------+-------+----------+--------------------------------+
+
+
++-------------------------------------------------------+
+; Port Connectivity Checks: "uart:ser1|counter:receive" ;
++------+-------+----------+-----------------------------+
+; Port ; Type  ; Severity ; Details                     ;
++------+-------+----------+-----------------------------+
+; en   ; Input ; Info     ; Stuck at VCC                ;
++------+-------+----------+-----------------------------+
+
+
++--------------------------------------------------------+
+; Port Connectivity Checks: "uart:ser1|counter:transmit" ;
++------+-------+----------+------------------------------+
+; Port ; Type  ; Severity ; Details                      ;
++------+-------+----------+------------------------------+
+; en   ; Input ; Info     ; Stuck at VCC                 ;
++------+-------+----------+------------------------------+
+
+
++--------------------------------------------------+
+; Port Connectivity Checks: "uart:ser1|mux:tx_sel" ;
++------+-------+----------+------------------------+
+; Port ; Type  ; Severity ; Details                ;
++------+-------+----------+------------------------+
+; D1   ; Input ; Info     ; Stuck at VCC           ;
++------+-------+----------+------------------------+
+
+
++-------------------------------------------------------+
+; Port Connectivity Checks: "uart:ser1|piso_reg:txdata" ;
++------+-------+----------+-----------------------------+
+; Port ; Type  ; Severity ; Details                     ;
++------+-------+----------+-----------------------------+
+; D[9] ; Input ; Info     ; Stuck at VCC                ;
+; D[0] ; Input ; Info     ; Stuck at GND                ;
++------+-------+----------+-----------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "uart:ser1"                                                                                                        ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; Port          ; Type   ; Severity ; Details                                                                                                  ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; data_in[6..5] ; Input  ; Info     ; Stuck at VCC                                                                                             ;
+; data_in[4..3] ; Input  ; Info     ; Stuck at GND                                                                                             ;
+; data_in[1..0] ; Input  ; Info     ; Stuck at GND                                                                                             ;
+; data_in[7]    ; Input  ; Info     ; Stuck at GND                                                                                             ;
+; data_in[2]    ; Input  ; Info     ; Stuck at VCC                                                                                             ;
+; tx_busy       ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
++---------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+
+
++-------------------------------------------+
+; Port Connectivity Checks: "counter:count" ;
++------+-------+----------+-----------------+
+; Port ; Type  ; Severity ; Details         ;
++------+-------+----------+-----------------+
+; en   ; Input ; Info     ; Stuck at VCC    ;
++------+-------+----------+-----------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:01     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 32-bit Analysis & Synthesis
+    Info: Version 13.1.0 Build 162 10/23/2013 SJ Web Edition
+    Info: Processing started: Fri Jan 17 14:29:01 2014
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off full_test -c DE0_Nano
+Warning (136002): Ignored duplicate of assignment PARTITION_SOURCE for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_PRESERVE_HIGH_SPEED_TILES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IGNORE_SOURCE_FILE_CHANGES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ALWAYS_USE_QXP_NETLIST for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_NEW_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PIN_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PROMOTE_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_TYPE for node ""
+Warning (136002): Ignored duplicate of assignment ALLOW_MULTIPLE_PERSONAS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ASD_REGION_ID for node ""
+Warning (136002): Ignored duplicate of assignment CROSS_BOUNDARY_OPTIMIZATIONS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_CONSTANTS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_INVERSIONS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_BIDIRS for node ""
+Warning (136002): Ignored duplicate of assignment ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_EXTRACT_HARD_BLOCK_NODES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ENABLE_STRICT_PRESERVATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_BACK_ANNOTATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_COLOR for node ""
+Warning (136002): Ignored duplicate of assignment HIERARCHY_BLACKBOX_FILE for node "|"
+Warning (136002): Ignored duplicate of assignment PARTITION_SOURCE for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_PRESERVE_HIGH_SPEED_TILES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IGNORE_SOURCE_FILE_CHANGES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ALWAYS_USE_QXP_NETLIST for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_NEW_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PIN_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PROMOTE_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_TYPE for node ""
+Warning (136002): Ignored duplicate of assignment ALLOW_MULTIPLE_PERSONAS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ASD_REGION_ID for node ""
+Warning (136002): Ignored duplicate of assignment CROSS_BOUNDARY_OPTIMIZATIONS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_CONSTANTS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_INVERSIONS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_BIDIRS for node ""
+Warning (136002): Ignored duplicate of assignment ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_EXTRACT_HARD_BLOCK_NODES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ENABLE_STRICT_PRESERVATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_BACK_ANNOTATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_COLOR for node ""
+Warning (136002): Ignored duplicate of assignment HIERARCHY_BLACKBOX_FILE for node "|"
+Warning (136002): Ignored duplicate of assignment PARTITION_SOURCE for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_PRESERVE_HIGH_SPEED_TILES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IGNORE_SOURCE_FILE_CHANGES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ALWAYS_USE_QXP_NETLIST for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_NEW_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PIN_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PROMOTE_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_TYPE for node ""
+Warning (136002): Ignored duplicate of assignment ALLOW_MULTIPLE_PERSONAS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ASD_REGION_ID for node ""
+Warning (136002): Ignored duplicate of assignment CROSS_BOUNDARY_OPTIMIZATIONS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_CONSTANTS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_INVERSIONS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_BIDIRS for node ""
+Warning (136002): Ignored duplicate of assignment ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_EXTRACT_HARD_BLOCK_NODES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ENABLE_STRICT_PRESERVATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_BACK_ANNOTATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_COLOR for node ""
+Warning (136002): Ignored duplicate of assignment HIERARCHY_BLACKBOX_FILE for node "|"
+Warning (136002): Ignored duplicate of assignment PARTITION_SOURCE for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_PRESERVE_HIGH_SPEED_TILES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IGNORE_SOURCE_FILE_CHANGES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ALWAYS_USE_QXP_NETLIST for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_NEW_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PIN_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_IMPORT_PROMOTE_ASSIGNMENTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_TYPE for node ""
+Warning (136002): Ignored duplicate of assignment ALLOW_MULTIPLE_PERSONAS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ASD_REGION_ID for node ""
+Warning (136002): Ignored duplicate of assignment CROSS_BOUNDARY_OPTIMIZATIONS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_CONSTANTS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PROPAGATE_INVERSIONS_ON_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment MERGE_EQUIVALENT_BIDIRS for node ""
+Warning (136002): Ignored duplicate of assignment ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_EXTRACT_HARD_BLOCK_NODES for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_ENABLE_STRICT_PRESERVATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_BACK_ANNOTATION for node ""
+Warning (136002): Ignored duplicate of assignment PARTITION_COLOR for node ""
+Warning (136002): Ignored duplicate of assignment HIERARCHY_BLACKBOX_FILE for node "|"
+Info (11104): Parallel Compilation has detected 4 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 2 of the 2 physical processors detected instead.
+Info (12021): Found 1 design units, including 1 entities, in source file /home/bmperez/full_test.sv
+    Info (12023): Found entity 1: DE0_Nano
+Info (12021): Found 3 design units, including 3 entities, in source file /home/bmperez/sandbox/uart.sv
+    Info (12023): Found entity 1: uart
+    Info (12023): Found entity 2: rx_control
+    Info (12023): Found entity 3: tx_control
+Info (12021): Found 1 design units, including 1 entities, in source file /home/bmperez/sandbox/pwm_new.sv
+    Info (12023): Found entity 1: pwm
+Info (12021): Found 2 design units, including 2 entities, in source file /home/bmperez/sandbox/controller.sv
+    Info (12023): Found entity 1: controller
+    Info (12023): Found entity 2: control_FSM
+Warning (12090): Entity "mux" obtained from "../projects/build18_2014/dev/fpga/lib/lib.sv" instead of from Quartus II megafunction library
+Info (12021): Found 7 design units, including 7 entities, in source file /home/bmperez/projects/build18_2014/dev/fpga/lib/lib.sv
+    Info (12023): Found entity 1: pipo_reg
+    Info (12023): Found entity 2: piso_reg
+    Info (12023): Found entity 3: sipo_reg
+    Info (12023): Found entity 4: counter
+    Info (12023): Found entity 5: mux
+    Info (12023): Found entity 6: limit_counter
+    Info (12023): Found entity 7: is_equal
+Info (12127): Elaborating entity "DE0_Nano" for the top level hierarchy
+Info (12128): Elaborating entity "counter" for hierarchy "counter:count"
+Info (12128): Elaborating entity "uart" for hierarchy "uart:ser1"
+Info (12128): Elaborating entity "pipo_reg" for hierarchy "uart:ser1|pipo_reg:received"
+Info (12128): Elaborating entity "sipo_reg" for hierarchy "uart:ser1|sipo_reg:rxdata"
+Info (12128): Elaborating entity "piso_reg" for hierarchy "uart:ser1|piso_reg:txdata"
+Info (12128): Elaborating entity "mux" for hierarchy "uart:ser1|mux:tx_sel"
+Info (12128): Elaborating entity "counter" for hierarchy "uart:ser1|counter:transmit"
+Info (12128): Elaborating entity "counter" for hierarchy "uart:ser1|counter:rx_count"
+Info (12128): Elaborating entity "rx_control" for hierarchy "uart:ser1|rx_control:rx_ctrl"
+Info (12128): Elaborating entity "tx_control" for hierarchy "uart:ser1|tx_control:tx_ctrl"
+Info (12128): Elaborating entity "pwm" for hierarchy "pwm:m1"
+Info (12128): Elaborating entity "limit_counter" for hierarchy "pwm:m1|limit_counter:clk_cnt"
+Warning (10230): Verilog HDL assignment warning at lib.sv(102): truncated value with size 32 to match size of target (12)
+Info (12128): Elaborating entity "limit_counter" for hierarchy "pwm:m1|limit_counter:chnk_cnt"
+Warning (10230): Verilog HDL assignment warning at lib.sv(102): truncated value with size 32 to match size of target (7)
+Info (12128): Elaborating entity "pwm" for hierarchy "pwm:servo"
+Info (12128): Elaborating entity "limit_counter" for hierarchy "pwm:servo|limit_counter:clk_cnt"
+Warning (10230): Verilog HDL assignment warning at lib.sv(102): truncated value with size 32 to match size of target (13)
+Info (12128): Elaborating entity "controller" for hierarchy "controller:cntrl"
+Warning (10230): Verilog HDL assignment warning at controller.sv(31): truncated value with size 32 to match size of target (7)
+Info (12128): Elaborating entity "pipo_reg" for hierarchy "controller:cntrl|pipo_reg:motor_reg"
+Info (12128): Elaborating entity "counter" for hierarchy "controller:cntrl|counter:timeout_count"
+Info (12128): Elaborating entity "counter" for hierarchy "controller:cntrl|counter:packet_time"
+Info (12128): Elaborating entity "control_FSM" for hierarchy "controller:cntrl|control_FSM:control"
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13034): The following nodes have both tri-state and non-tri-state drivers
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[0]" and its non-tri-state driver.
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[3]" and its non-tri-state driver.
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[5]" and its non-tri-state driver.
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[7]" and its non-tri-state driver.
+Warning (13039): The following bidir pins have no drivers
+    Warning (13040): Bidir "GPIO_0_D[1]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[2]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[4]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[6]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[8]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[9]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[10]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[11]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[12]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[13]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[14]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[15]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[16]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[17]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[18]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[19]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[20]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[21]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[22]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[23]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[24]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[25]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[26]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[27]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[28]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[29]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[30]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[31]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[32]" has no driver
+    Warning (13040): Bidir "GPIO_0_D[33]" has no driver
+Warning (13009): TRI or OPNDRN buffers permanently enabled
+    Warning (13010): Node "GPIO_0_D[0]~synth"
+    Warning (13010): Node "GPIO_0_D[3]~synth"
+    Warning (13010): Node "GPIO_0_D[5]~synth"
+    Warning (13010): Node "GPIO_0_D[7]~synth"
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 5 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file /home/bmperez/final_build/output_files/DE0_Nano.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 7 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "KEY[0]"
+    Warning (15610): No output dependent on input pin "SW[0]"
+    Warning (15610): No output dependent on input pin "SW[1]"
+    Warning (15610): No output dependent on input pin "SW[2]"
+    Warning (15610): No output dependent on input pin "SW[3]"
+    Warning (15610): No output dependent on input pin "GPIO_0_IN[0]"
+    Warning (15610): No output dependent on input pin "GPIO_0_IN[1]"
+Info (21057): Implemented 335 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 9 input pins
+    Info (21059): Implemented 8 output pins
+    Info (21060): Implemented 34 bidirectional pins
+    Info (21061): Implemented 284 logic cells
+Info: Quartus II 32-bit Analysis & Synthesis was successful. 0 errors, 151 warnings
+    Info: Peak virtual memory: 390 megabytes
+    Info: Processing ended: Fri Jan 17 14:29:04 2014
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:03
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in /home/bmperez/final_build/output_files/DE0_Nano.map.smsg.
+
+

@@ -1,0 +1,16 @@
+
+State Machine - |DE0_Nano|uart:ser1|tx_control:tx_ctrl|current_state
+Name current_state.PAUSE current_state.SHIFT current_state.LOAD current_state.WAIT 
+current_state.WAIT 0 0 0 0 
+current_state.LOAD 0 0 1 1 
+current_state.SHIFT 0 1 0 1 
+current_state.PAUSE 1 0 0 1 
+
+State Machine - |DE0_Nano|uart:ser1|rx_control:rx_ctrl|current_state
+Name current_state.DONE current_state.PAUSE current_state.READ current_state.SYNC current_state.START current_state.WAIT 
+current_state.WAIT 0 0 0 0 0 0 
+current_state.START 0 0 0 0 1 1 
+current_state.SYNC 0 0 0 1 0 1 
+current_state.READ 0 0 1 0 0 1 
+current_state.PAUSE 0 1 0 0 0 1 
+current_state.DONE 1 0 0 0 0 1 
