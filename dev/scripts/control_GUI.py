@@ -268,7 +268,7 @@ def sendControlCommands(canvas):
     # Steering: 1<duty_cycle>
     # Note that 0 <= duty_cycle <= 100; it is a percentage
     throttle = int(round(canvas.data.throttle_level * 127.0/20))
-    steering_pulse = ((0.1/10*canvas.data.angle + 1.40)/20) * 127
+    steering_pulse = ((-0.1/10*canvas.data.angle + 1.40)/20) * 127
     steering_pulse = int(round(steering_pulse, 0))
     throttle_command = chr(throttle)
     steering_command = chr(1 << 7 | steering_pulse)

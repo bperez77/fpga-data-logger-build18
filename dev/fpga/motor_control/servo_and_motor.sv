@@ -1,5 +1,3 @@
-
-
 module servo_motor
   (input logic [7:0] control_val,
    input logic clk, clr, data_ready,
@@ -22,8 +20,8 @@ module servo_motor
    pipo_reg #(17) servo(.D(reg_input), .Q(servo_duty), .load(servo_reg),.*);
 
 
-   pwm #(/**17'd50000, 17'd500**/17'd500,17'd5) dc_motor(.duty_cycle(motor_duty), .pwm_pulse(motor_pulse), .*);
-   pwm #(/**17'd100000, 17'd1000**/17'd1000,17'd10) servo_controls(.duty_cycle(servo_duty), .pwm_pulse(servo_pulse), .*); 
+   pwm #(17'd50000, 17'd500) dc_motor(.duty_cycle(motor_duty), .pwm_pulse(motor_pulse), .*);
+   pwm #(17'd100000, 17'd1000) servo_controls(.duty_cycle(servo_duty), .pwm_pulse(servo_pulse), .*); 
 
 endmodule: servo_motor
    

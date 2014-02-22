@@ -1,6 +1,6 @@
 module ADC_RTL
   (input logic CLOCK_50, 
-   input logic KEY[0:1],
+   input logic [1:0] KEY,
    input logic tx_busy,
    output logic new_data,
    output logic [7:0] data_in);
